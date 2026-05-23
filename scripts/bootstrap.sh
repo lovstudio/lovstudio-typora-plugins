@@ -3,45 +3,20 @@ set -euo pipefail
 
 REPO_ZIP_URL="${LOVSTUDIO_TYPORA_PLUGINS_ZIP_URL:-https://github.com/lovstudio/lovstudio-typora-plugins/archive/refs/heads/main.zip}"
 
-mode="typora"
-skill_target="both"
 with_community_plugin="1"
 keep_community_ui="0"
 
 usage() {
-  printf '%s\n' "Usage: bootstrap.sh [--typora|--skill|--all] [--target agents|codex|both] [--no-community-plugin] [--keep-community-ui]"
+  printf '%s\n' "Usage: bootstrap.sh [--typora] [--no-community-plugin] [--keep-community-ui]"
   printf '%s\n' ""
   printf '%s\n' "Examples:"
   printf '%s\n' "  bootstrap.sh --typora"
   printf '%s\n' "  bootstrap.sh --typora --no-community-plugin"
-  printf '%s\n' "  bootstrap.sh --skill"
-  printf '%s\n' "  bootstrap.sh --all"
 }
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
-    --all)
-      mode="all"
-      shift
-      ;;
-    --skill)
-      mode="skill"
-      shift
-      ;;
     --typora|--plugins)
-      mode="typora"
-      shift
-      ;;
-    --target)
-      if [ "$#" -lt 2 ]; then
-        printf '%s\n' "Missing value for --target" >&2
-        exit 2
-      fi
-      skill_target="$2"
-      shift 2
-      ;;
-    --target=*)
-      skill_target="${1#--target=}"
       shift
       ;;
     --with-community-plugin)
@@ -94,43 +69,10 @@ download_repo() {
   fi
 }
 
-install_skill_to() {
-  target_root="$1"
-  source_dir="$repo_dir/skills/lovstudio-typora-plugins"
-  target_dir="$target_root/lovstudio-typora-plugins"
-
-  mkdir -p "$target_root"
-  rm -rf "$target_dir"
-  cp -R "$source_dir" "$target_dir"
-  printf 'Installed Skill: %s\n' "$target_dir"
-}
-
-install_skill() {
-  case "$skill_target" in
-    agents)
-      install_skill_to "$HOME/.agents/skills"
-      ;;
-    codex)
-      install_skill_to "$HOME/.codex/skills"
-      ;;
-    both)
-      install_skill_to "$HOME/.agents/skills"
-      install_skill_to "$HOME/.codex/skills"
-      ;;
-    *)
-      printf 'Invalid --target value: %s\n' "$skill_target" >&2
-      printf '%s\n' "Use one of: agents, codex, both" >&2
-      exit 2
-      ;;
-  esac
-
-  printf '%s\n' "Restart your AI tool, or start a new chat, so it can reload the Skill."
-}
-
 install_typora_plugins() {
   require_command python3
 
-  installer="$repo_dir/skills/lovstudio-typora-plugins/scripts/install_typora_plugins.py"
+  installer="$repo_dir/scripts/install_typora_plugins.py"
   args=()
 
   if [ "$with_community_plugin" = "1" ]; then
@@ -145,22 +87,5 @@ install_typora_plugins() {
 }
 
 download_repo
-
-case "$mode" in
-  all)
-    install_skill
-    install_typora_plugins
-    ;;
-  skill)
-    install_skill
-    ;;
-  typora)
-    install_typora_plugins
-    ;;
-  *)
-    printf 'Invalid mode: %s\n' "$mode" >&2
-    exit 2
-    ;;
-esac
-
+install_typora_plugins
 printf '%s\n' "Done."

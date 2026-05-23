@@ -1,90 +1,53 @@
-# Lovstudio Typora 插件
+# Lovstudio Typora 插件配置
 
-这是给 Typora 用的一组小插件，基于非官方的 [`typora-community-plugin`](https://github.com/typora-community-plugin/typora-community-plugin) 运行。
+这是 Lovstudio 专用的 Typora 插件配置仓库。它不是一个通用插件市场，而是一套面向 Lovstudio 写作习惯的小型配置：让 Typora 里的图片更适合阅读和编辑，并在重新打开 Typora 时尽量回到上次的工作位置。
 
-先说清楚：Typora 官方没有开放正式插件系统。这里的插件依赖社区方案，会往 Typora 的页面里注入脚本。它可以实现更多功能，但也意味着 Typora 升级后可能需要重新安装或调整。
+当前包含 2 个小插件，基于非官方的 [`typora-community-plugin`](https://github.com/typora-community-plugin/typora-community-plugin) 运行。
 
-## 目前有哪些插件
+先说清楚：Typora 官方没有开放正式插件系统。这里的实现依赖社区方案，会向 Typora 注入脚本。它能实现更多功能，但 Typora 升级后可能需要重新安装或调整。
+
+## 包含的插件
 
 | 插件 | 插件 ID | 做什么 |
 | --- | --- | --- |
 | 图片预览和 alt 编辑 | `local.image-fit-viewer` | Typora 编辑区里的图片最高显示 240px；双击图片全屏预览；在预览底部修改图片 alt 文本。 |
 | 恢复上次视图 | `local.session-restore` | 重新打开 Typora 时，尽量恢复上次打开的文件、滚动位置和光标位置。 |
 
-## 适合谁用
-
-如果你只是想让 Typora 的图片显示更舒服，并且希望下次打开 Typora 能回到上次编辑的位置，可以用这两个插件。
-
-如果你不熟悉命令行，也可以照着下面步骤做。需要注意路径里有空格，复制命令时要完整复制。
-
-## 安装前准备
-
-你需要先安装：
-
-- Typora
-- `typora-community-plugin`
-
-如果还没有安装 `typora-community-plugin`，先去它的项目页面下载并安装：
-
-[typora-community-plugin](https://github.com/typora-community-plugin/typora-community-plugin)
-
-安装完成后，Typora 的用户目录里应该会出现类似这个目录：
-
-```text
-~/Library/Application Support/abnerworks.Typora/plugins
-```
-
-下面的步骤以 macOS 为例。
-
-## 安装插件
-
-在本仓库目录下执行：
-
-```bash
-cp -R plugins/local.image-fit-viewer "$HOME/Library/Application Support/abnerworks.Typora/plugins/plugins/"
-cp -R plugins/local.session-restore "$HOME/Library/Application Support/abnerworks.Typora/plugins/plugins/"
-```
-
-这两条命令做的事情是：把插件文件夹复制到 Typora 社区插件目录里。
-
-## 启用插件
-
-打开这个配置文件：
-
-```text
-~/Library/Application Support/abnerworks.Typora/plugins/settings/plugins.json
-```
-
-如果文件不存在，就新建一个。内容写成这样：
-
-```json
-{
-  "local.image-fit-viewer": true,
-  "local.session-restore": true
-}
-```
-
-保存后，完全退出 Typora，再重新打开 Typora。
-
 ## 让 AI 帮你安装
 
-不需要先安装 Skill。只要你的 AI 工具能操作终端，就可以把下面这段话完整复制给它：
+如果你的 AI 工具能操作终端，直接把下面这段话完整复制给它：
 
 ```text
-请帮我在这台 macOS 上安装这个 GitHub 项目到 Typora：https://github.com/lovstudio/lovstudio-typora-plugins
+请帮我在这台 macOS 上安装 Lovstudio 专用 Typora 插件配置：https://github.com/lovstudio/lovstudio-typora-plugins
 
-请先阅读项目 README.md 和 scripts/bootstrap.sh，确认它会修改哪些文件；然后用项目提供的 bootstrap 脚本完成安装。必要时一并安装 typora-community-plugin。安装时请保持 Typora 原来的界面，不要开启社区插件自带的额外侧边栏或标签页 UI。
+请先阅读项目 README.md 和 scripts/bootstrap.sh，确认它会修改哪些文件；然后使用项目提供的 bootstrap 脚本完成安装。必要时一并安装 typora-community-plugin。安装时请保持 Typora 原来的界面，不要开启社区插件自带的额外侧边栏或标签页 UI。
 
 安装完成后，请告诉我你改了什么，并提醒我完全退出 Typora，再重新打开 Typora。
 ```
 
-AI 通常会使用这条安装命令：
+AI 通常会运行这条命令：
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --typora
 ```
 
-它会完成这些事情：
+如果你已经确认自己装过 `typora-community-plugin`，可以让 AI 使用更保守的命令：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --typora --no-community-plugin
+```
+
+安装完成后，完全退出 Typora，再重新打开。
+
+## 自己运行命令安装
+
+如果你想直接安装，运行：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --typora
+```
+
+这条命令会：
 
 - 下载本仓库。
 - 安装或接入 `typora-community-plugin`。
@@ -92,38 +55,59 @@ curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/
 - 写入 `plugins.json` 并启用插件。
 - 关闭 `typora-community-plugin` 默认的额外 UI，让 Typora 尽量保持原来的界面。
 
-如果你已经确认自己装过 `typora-community-plugin`，可以复制这个更保守的版本：
+## 手动安装
 
-```text
-请帮我在这台 macOS 上安装 Lovstudio Typora 插件。
+下面的步骤以 macOS 为例。你需要先安装 Typora。
 
-项目地址：https://github.com/lovstudio/lovstudio-typora-plugins
+如果已经安装过 `typora-community-plugin`，在本仓库目录下运行：
 
-我已经安装过 typora-community-plugin。请不要重新安装它，只运行下面的命令安装并启用本项目里的 Typora 插件：
-
-curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --typora --no-community-plugin
-
-安装完成后，请提醒我完全退出 Typora，再重新打开 Typora。
+```bash
+python3 scripts/install_typora_plugins.py
 ```
 
-仓库里仍然保留了 Skill 包，路径是：
+如果还没有安装 `typora-community-plugin`，运行：
 
-```text
-skills/lovstudio-typora-plugins
-dist/lovstudio-typora-plugins.skill
+```bash
+python3 scripts/install_typora_plugins.py --with-community-plugin
 ```
 
-但普通安装不需要用它。Skill 只是给支持 Skill 机制的 AI 工具做可选集成。
+如果你只想安装其中一个插件：
+
+```bash
+python3 scripts/install_typora_plugins.py --plugins local.image-fit-viewer
+python3 scripts/install_typora_plugins.py --plugins local.session-restore
+```
+
+## 会修改哪些文件
+
+安装脚本会写入 Typora 的社区插件目录：
+
+```text
+~/Library/Application Support/abnerworks.Typora/plugins/plugins/local.image-fit-viewer
+~/Library/Application Support/abnerworks.Typora/plugins/plugins/local.session-restore
+~/Library/Application Support/abnerworks.Typora/plugins/settings/plugins.json
+~/Library/Application Support/abnerworks.Typora/plugins/settings/core.json
+```
+
+如果使用了 `--with-community-plugin`，脚本还会下载 `typora-community-plugin`，并给 Typora 的 `index.html` 注入加载脚本。修改前会创建带时间戳的备份文件。
+
+常见的 Typora 路径是：
+
+```text
+/Applications/Typora.app/Contents/Resources/TypeMark/index.html
+```
 
 ## 保持 Typora 原来的界面
 
-`typora-community-plugin` 默认可能会打开一些额外 UI，比如左侧活动栏、自己的标签页界面。如果你只想用本仓库里的小插件，不想改变 Typora 原本界面，可以打开：
+`typora-community-plugin` 默认可能会打开一些额外 UI，比如左侧活动栏、自己的标签页界面。本仓库的安装脚本默认会关闭这些 UI。
+
+对应配置写在：
 
 ```text
 ~/Library/Application Support/abnerworks.Typora/plugins/settings/core.json
 ```
 
-把相关开关设置为 `false`：
+关键字段是：
 
 ```json
 {
@@ -135,8 +119,6 @@ dist/lovstudio-typora-plugins.skill
   }
 }
 ```
-
-如果这个文件里已经有其他配置，不要整段覆盖，保留原来的内容，只把上面三个字段加到 `settings` 里即可。
 
 ## 插件怎么用
 

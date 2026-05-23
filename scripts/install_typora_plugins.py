@@ -3,9 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import shutil
-import sys
 import tempfile
 import urllib.parse
 import urllib.request
@@ -28,8 +26,8 @@ def main() -> int:
         home / "Library/Application Support/abnerworks.Typora"
     )
     typora_app = Path(args.typora_app).expanduser()
-    skill_dir = Path(__file__).resolve().parents[1]
-    assets_plugins = skill_dir / "assets/plugins"
+    repo_root = Path(__file__).resolve().parents[1]
+    source_plugins = repo_root / "plugins"
     plugin_ids = parse_plugin_ids(args.plugins)
 
     user_plugins_root = user_data / "plugins"
@@ -43,9 +41,9 @@ def main() -> int:
 
     user_plugin_dir.mkdir(parents=True, exist_ok=True)
     for plugin_id in plugin_ids:
-        source = assets_plugins / plugin_id
+        source = source_plugins / plugin_id
         if not source.exists():
-            raise SystemExit(f"Bundled plugin not found: {source}")
+            raise SystemExit(f"Project plugin not found: {source}")
 
         target = user_plugin_dir / plugin_id
         if target.exists():
