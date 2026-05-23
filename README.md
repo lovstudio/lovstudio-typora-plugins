@@ -68,6 +68,48 @@ cp -R plugins/local.session-restore "$HOME/Library/Application Support/abnerwork
 
 ## 让 AI Agent 自动安装
 
+如果你的 AI 工具能帮你运行命令，可以直接复制下面的话给它。
+
+### 一句话安装本 Skill
+
+复制给 AI：
+
+```text
+请帮我运行这条命令，把 Lovstudio Typora Plugins 的 Skill 安装到本机 AI 工具里：curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --skill
+```
+
+这句话会让 AI 下载本仓库，并把 Skill 安装到常见的本地 Skill 目录：
+
+```text
+~/.agents/skills/lovstudio-typora-plugins
+~/.codex/skills/lovstudio-typora-plugins
+```
+
+安装完 Skill 后，通常需要重启 AI 工具，或者新开一个对话，AI 才能加载到新 Skill。
+
+### 一句话安装并启用本项目
+
+如果你想让 AI 直接把 Typora 插件也装好，复制给 AI：
+
+```text
+请帮我运行这条命令，安装 Lovstudio Typora Plugins 的 Skill，并安装启用对应的 Typora 插件：curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --all
+```
+
+这条命令会做四件事：
+
+- 下载本仓库。
+- 安装 `lovstudio-typora-plugins` Skill。
+- 安装或接入 `typora-community-plugin`。
+- 安装并启用本项目里的两个 Typora 插件。
+
+如果你已经安装过 `typora-community-plugin`，只想安装本项目里的 Typora 插件，也可以让 AI 运行：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --typora --no-community-plugin
+```
+
+安装完成后，完全退出 Typora，再重新打开。
+
 本仓库额外提供了一个 Skill：
 
 ```text
@@ -80,9 +122,9 @@ skills/lovstudio-typora-plugins
 dist/lovstudio-typora-plugins.skill
 ```
 
-### 先把这个 Skill 安装到 AI 工具里
+### 手动安装 Skill 到 AI 工具
 
-这里分两种情况。你只需要选一种。
+如果你的 AI 工具不能运行命令，可以手动安装。这里分两种情况，你只需要选一种。
 
 #### 方式一：导入 `.skill` 文件
 
