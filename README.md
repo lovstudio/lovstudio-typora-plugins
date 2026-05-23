@@ -80,6 +80,75 @@ skills/lovstudio-typora-plugins
 dist/lovstudio-typora-plugins.skill
 ```
 
+### 先把这个 Skill 安装到 AI 工具里
+
+这里分两种情况。你只需要选一种。
+
+#### 方式一：导入 `.skill` 文件
+
+如果你的 AI 工具有“安装 Skill”、“导入 Skill”或类似入口，推荐用这个方式。
+
+1. 打开本仓库的 GitHub 页面。
+2. 找到这个文件：
+
+```text
+dist/lovstudio-typora-plugins.skill
+```
+
+3. 下载这个 `.skill` 文件到本机。
+4. 回到 AI 工具，选择“安装 Skill”或“导入 Skill”。
+5. 选中刚下载的 `lovstudio-typora-plugins.skill`。
+6. 安装完成后，重启 AI 工具，或者新开一个对话，让 AI 重新加载 Skill。
+
+也可以用命令直接下载：
+
+```bash
+curl -L -o lovstudio-typora-plugins.skill https://github.com/lovstudio/lovstudio-typora-plugins/raw/main/dist/lovstudio-typora-plugins.skill
+```
+
+下载后，再按你的 AI 工具里的 Skill 导入方式安装。
+
+#### 方式二：手动复制 Skill 目录
+
+如果你的 AI 工具是从本地目录读取 Skill，可以直接复制源码目录。
+
+本仓库里的 Skill 目录是：
+
+```text
+skills/lovstudio-typora-plugins
+```
+
+常见的本地 Skill 目录有两个：
+
+```text
+~/.agents/skills
+~/.codex/skills
+```
+
+如果你不确定用哪个，可以先问你的 AI：
+
+```text
+你的 Skill 目录在哪里？
+```
+
+如果你使用的是 `~/.agents/skills`，在本仓库目录下执行：
+
+```bash
+mkdir -p "$HOME/.agents/skills"
+cp -R skills/lovstudio-typora-plugins "$HOME/.agents/skills/"
+```
+
+如果你使用的是 `~/.codex/skills`，在本仓库目录下执行：
+
+```bash
+mkdir -p "$HOME/.codex/skills"
+cp -R skills/lovstudio-typora-plugins "$HOME/.codex/skills/"
+```
+
+复制完成后，重启 AI 工具，或者新开一个对话，让 AI 重新加载 Skill。
+
+注意：安装 Skill 只是让 AI 学会“如何安装这些 Typora 插件”。它不会自动改 Typora。下一步还要让 AI 执行安装。
+
 安装这个 Skill 后，你可以直接对 Agent 说：
 
 ```text
