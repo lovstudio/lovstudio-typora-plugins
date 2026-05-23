@@ -66,149 +66,54 @@ cp -R plugins/local.session-restore "$HOME/Library/Application Support/abnerwork
 
 保存后，完全退出 Typora，再重新打开 Typora。
 
-## 让 AI Agent 自动安装
+## 让 AI 帮你安装
 
-如果你的 AI 工具能帮你运行命令，可以直接复制下面的话给它。
-
-### 一句话安装本 Skill
-
-复制给 AI：
+不需要先安装 Skill。只要你的 AI 工具能操作终端，就可以把下面这段话完整复制给它：
 
 ```text
-请帮我运行这条命令，把 Lovstudio Typora Plugins 的 Skill 安装到本机 AI 工具里：curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --skill
+请帮我在这台 macOS 上安装这个 GitHub 项目到 Typora：https://github.com/lovstudio/lovstudio-typora-plugins
+
+请先阅读项目 README.md 和 scripts/bootstrap.sh，确认它会修改哪些文件；然后用项目提供的 bootstrap 脚本完成安装。必要时一并安装 typora-community-plugin。安装时请保持 Typora 原来的界面，不要开启社区插件自带的额外侧边栏或标签页 UI。
+
+安装完成后，请告诉我你改了什么，并提醒我完全退出 Typora，再重新打开 Typora。
 ```
 
-这句话会让 AI 下载本仓库，并把 Skill 安装到常见的本地 Skill 目录：
+AI 通常会使用这条安装命令：
 
-```text
-~/.agents/skills/lovstudio-typora-plugins
-~/.codex/skills/lovstudio-typora-plugins
+```bash
+curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --typora
 ```
 
-安装完 Skill 后，通常需要重启 AI 工具，或者新开一个对话，AI 才能加载到新 Skill。
-
-### 一句话安装并启用本项目
-
-如果你想让 AI 直接把 Typora 插件也装好，复制给 AI：
-
-```text
-请帮我运行这条命令，安装 Lovstudio Typora Plugins 的 Skill，并安装启用对应的 Typora 插件：curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --all
-```
-
-这条命令会做四件事：
+它会完成这些事情：
 
 - 下载本仓库。
-- 安装 `lovstudio-typora-plugins` Skill。
 - 安装或接入 `typora-community-plugin`。
-- 安装并启用本项目里的两个 Typora 插件。
-
-如果你已经安装过 `typora-community-plugin`，只想安装本项目里的 Typora 插件，也可以让 AI 运行：
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --typora --no-community-plugin
-```
-
-安装完成后，完全退出 Typora，再重新打开。
-
-本仓库额外提供了一个 Skill：
-
-```text
-skills/lovstudio-typora-plugins
-```
-
-如果你的 AI 工具支持安装 `.skill` 文件，可以使用：
-
-```text
-dist/lovstudio-typora-plugins.skill
-```
-
-### 手动安装 Skill 到 AI 工具
-
-如果你的 AI 工具不能运行命令，可以手动安装。这里分两种情况，你只需要选一种。
-
-#### 方式一：导入 `.skill` 文件
-
-如果你的 AI 工具有“安装 Skill”、“导入 Skill”或类似入口，推荐用这个方式。
-
-1. 打开本仓库的 GitHub 页面。
-2. 找到这个文件：
-
-```text
-dist/lovstudio-typora-plugins.skill
-```
-
-3. 下载这个 `.skill` 文件到本机。
-4. 回到 AI 工具，选择“安装 Skill”或“导入 Skill”。
-5. 选中刚下载的 `lovstudio-typora-plugins.skill`。
-6. 安装完成后，重启 AI 工具，或者新开一个对话，让 AI 重新加载 Skill。
-
-也可以用命令直接下载：
-
-```bash
-curl -L -o lovstudio-typora-plugins.skill https://github.com/lovstudio/lovstudio-typora-plugins/raw/main/dist/lovstudio-typora-plugins.skill
-```
-
-下载后，再按你的 AI 工具里的 Skill 导入方式安装。
-
-#### 方式二：手动复制 Skill 目录
-
-如果你的 AI 工具是从本地目录读取 Skill，可以直接复制源码目录。
-
-本仓库里的 Skill 目录是：
-
-```text
-skills/lovstudio-typora-plugins
-```
-
-常见的本地 Skill 目录有两个：
-
-```text
-~/.agents/skills
-~/.codex/skills
-```
-
-如果你不确定用哪个，可以先问你的 AI：
-
-```text
-你的 Skill 目录在哪里？
-```
-
-如果你使用的是 `~/.agents/skills`，在本仓库目录下执行：
-
-```bash
-mkdir -p "$HOME/.agents/skills"
-cp -R skills/lovstudio-typora-plugins "$HOME/.agents/skills/"
-```
-
-如果你使用的是 `~/.codex/skills`，在本仓库目录下执行：
-
-```bash
-mkdir -p "$HOME/.codex/skills"
-cp -R skills/lovstudio-typora-plugins "$HOME/.codex/skills/"
-```
-
-复制完成后，重启 AI 工具，或者新开一个对话，让 AI 重新加载 Skill。
-
-注意：安装 Skill 只是让 AI 学会“如何安装这些 Typora 插件”。它不会自动改 Typora。下一步还要让 AI 执行安装。
-
-安装这个 Skill 后，你可以直接对 Agent 说：
-
-```text
-帮我安装并启用 Lovstudio Typora 插件
-```
-
-Agent 会调用 Skill 里的安装脚本，自动完成这些事情：
-
 - 复制两个插件到 Typora 社区插件目录。
 - 写入 `plugins.json` 并启用插件。
 - 关闭 `typora-community-plugin` 默认的额外 UI，让 Typora 尽量保持原来的界面。
-- 如果你明确要求完整安装，还可以一并安装 `typora-community-plugin`。
 
-Skill 内部使用的脚本是：
+如果你已经确认自己装过 `typora-community-plugin`，可以复制这个更保守的版本：
 
 ```text
-skills/lovstudio-typora-plugins/scripts/install_typora_plugins.py
+请帮我在这台 macOS 上安装 Lovstudio Typora 插件。
+
+项目地址：https://github.com/lovstudio/lovstudio-typora-plugins
+
+我已经安装过 typora-community-plugin。请不要重新安装它，只运行下面的命令安装并启用本项目里的 Typora 插件：
+
+curl -fsSL https://raw.githubusercontent.com/lovstudio/lovstudio-typora-plugins/main/scripts/bootstrap.sh | bash -s -- --typora --no-community-plugin
+
+安装完成后，请提醒我完全退出 Typora，再重新打开 Typora。
 ```
+
+仓库里仍然保留了 Skill 包，路径是：
+
+```text
+skills/lovstudio-typora-plugins
+dist/lovstudio-typora-plugins.skill
+```
+
+但普通安装不需要用它。Skill 只是给支持 Skill 机制的 AI 工具做可选集成。
 
 ## 保持 Typora 原来的界面
 

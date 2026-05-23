@@ -3,18 +3,19 @@ set -euo pipefail
 
 REPO_ZIP_URL="${LOVSTUDIO_TYPORA_PLUGINS_ZIP_URL:-https://github.com/lovstudio/lovstudio-typora-plugins/archive/refs/heads/main.zip}"
 
-mode="all"
+mode="typora"
 skill_target="both"
 with_community_plugin="1"
 keep_community_ui="0"
 
 usage() {
-  printf '%s\n' "Usage: bootstrap.sh [--all|--skill|--typora] [--target agents|codex|both] [--no-community-plugin] [--keep-community-ui]"
+  printf '%s\n' "Usage: bootstrap.sh [--typora|--skill|--all] [--target agents|codex|both] [--no-community-plugin] [--keep-community-ui]"
   printf '%s\n' ""
   printf '%s\n' "Examples:"
+  printf '%s\n' "  bootstrap.sh --typora"
+  printf '%s\n' "  bootstrap.sh --typora --no-community-plugin"
   printf '%s\n' "  bootstrap.sh --skill"
   printf '%s\n' "  bootstrap.sh --all"
-  printf '%s\n' "  bootstrap.sh --typora --no-community-plugin"
 }
 
 while [ "$#" -gt 0 ]; do
