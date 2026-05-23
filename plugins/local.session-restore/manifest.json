@@ -1,0 +1,12 @@
+{
+  "id": "local.session-restore",
+  "name": "Session Restore",
+  "description": "Restore the last open file and scroll position when Typora starts.",
+  "author": "local",
+  "authorUrl": "",
+  "repo": "",
+  "version": "1.2.1",
+  "minAppVersion": "1.5.0",
+  "minCoreVersion": "2.0.0",
+  "platforms": ["darwin", "win32", "linux"]
+}

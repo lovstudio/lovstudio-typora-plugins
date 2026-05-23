@@ -1,0 +1,113 @@
+#write img {
+  max-height: 240px;
+  width: auto;
+  object-fit: contain;
+}
+
+#write .md-image img,
+#write p > img:only-child {
+  cursor: zoom-in;
+}
+
+.typora-image-fit-viewer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  padding: 24px;
+  background: rgba(12, 14, 18, 0.88);
+  cursor: zoom-out;
+}
+
+.typora-image-fit-viewer-frame {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+}
+
+.typora-image-fit-viewer-preview {
+  display: flex;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.typora-image-fit-viewer-overlay img {
+  display: block;
+  max-width: 96vw !important;
+  max-height: calc(96vh - 82px) !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  border-radius: 4px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+.typora-image-fit-viewer-alt-form {
+  display: grid;
+  grid-template-columns: auto minmax(160px, 1fr) auto auto auto;
+  gap: 10px;
+  align-items: center;
+  width: min(860px, 100%);
+  margin: 0 auto;
+  padding: 10px;
+  color: #f7f8fa;
+  background: rgba(22, 24, 30, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.36);
+  cursor: default;
+}
+
+.typora-image-fit-viewer-alt-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.typora-image-fit-viewer-alt-input {
+  min-width: 0;
+  height: 32px;
+  padding: 0 10px;
+  color: #1c2026;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 5px;
+  font-size: 13px;
+  outline: none;
+}
+
+.typora-image-fit-viewer-alt-input:focus {
+  border-color: #8db7ff;
+  box-shadow: 0 0 0 2px rgba(141, 183, 255, 0.28);
+}
+
+.typora-image-fit-viewer-alt-status {
+  min-width: 7em;
+  color: #c7d2e5;
+  font-size: 12px;
+}
+
+.typora-image-fit-viewer-alt-form button {
+  height: 32px;
+  padding: 0 12px;
+  color: #f7f8fa;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 5px;
+  font-size: 13px;
+}
+
+.typora-image-fit-viewer-alt-form button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 640px) {
+  .typora-image-fit-viewer-alt-form {
+    grid-template-columns: auto 1fr;
+  }
+
+  .typora-image-fit-viewer-alt-status {
+    grid-column: 1 / -1;
+  }
+}
