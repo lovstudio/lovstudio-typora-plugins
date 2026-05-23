@@ -66,6 +66,39 @@ cp -R plugins/local.session-restore "$HOME/Library/Application Support/abnerwork
 
 保存后，完全退出 Typora，再重新打开 Typora。
 
+## 让 AI Agent 自动安装
+
+本仓库额外提供了一个 Skill：
+
+```text
+skills/lovstudio-typora-plugins
+```
+
+如果你的 AI 工具支持安装 `.skill` 文件，可以使用：
+
+```text
+dist/lovstudio-typora-plugins.skill
+```
+
+安装这个 Skill 后，你可以直接对 Agent 说：
+
+```text
+帮我安装并启用 Lovstudio Typora 插件
+```
+
+Agent 会调用 Skill 里的安装脚本，自动完成这些事情：
+
+- 复制两个插件到 Typora 社区插件目录。
+- 写入 `plugins.json` 并启用插件。
+- 关闭 `typora-community-plugin` 默认的额外 UI，让 Typora 尽量保持原来的界面。
+- 如果你明确要求完整安装，还可以一并安装 `typora-community-plugin`。
+
+Skill 内部使用的脚本是：
+
+```text
+skills/lovstudio-typora-plugins/scripts/install_typora_plugins.py
+```
+
 ## 保持 Typora 原来的界面
 
 `typora-community-plugin` 默认可能会打开一些额外 UI，比如左侧活动栏、自己的标签页界面。如果你只想用本仓库里的小插件，不想改变 Typora 原本界面，可以打开：
